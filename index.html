@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhishek Dey — Independent AI/ML Researcher</title>
+    <meta name="description" content="I train Deep Neural Nets from Scratch. Independent AI/ML Researcher.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #555; background: #fafafa; }
+        .container { max-width: 886px; margin: 0 auto; padding: 4rem 2rem; }
+        
+        .header { display: flex; align-items: center; gap: 2rem; margin-bottom: 1.5rem; }
+        .avatar { width: 180px; height: 180px; border-radius: 50%; flex-shrink: 0; filter: grayscale(100%); transition: filter 0.3s; }
+        .avatar-wrap:hover .avatar { filter: none; }
+        .avatar-wrap:hover .avatar-popup { opacity: 1 !important; }
+        .header-text { text-align: left; }
+        .name { font-size: 2.4rem; font-weight: 600; margin-bottom: 0.3rem; color: #444; }
+        .tagline { font-size: 1.2rem; color: transparent; background: linear-gradient(135deg, #f953c6, #764ba2, #667eea); -webkit-background-clip: text; background-clip: text; font-weight: 600; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 0.95rem; color: #888; }
+        .header-icons { margin-top: 0.8rem; display: flex; gap: 1rem; }
+        .header-icons a { display: inline-block; }
+        .header-icons svg { width: 20px; height: 20px; fill: #999; }
+        .header-icons svg:hover { fill: #333; }
+        
+        .links { display: flex; justify-content: center; gap: 1.5rem; margin: 2rem 0; flex-wrap: wrap; }
+        .links a { color: #0969da; text-decoration: none; font-size: 0.95rem; }
+        .links a:hover { text-decoration: underline; }
+        
+        .section { margin-top: 1rem; }
+        .section h2 { font-size: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; color: #444; }
+        .section p { color: #333; line-height: 1.7; margin-bottom: 1rem; }
+        
+        .projects { list-style: none; position: relative; padding-left: 2rem; border-left: 2px solid #ddd; margin-left: 0.5rem; }
+        .projects li { padding: 0.8rem 0; position: relative; }
+        .projects li::before { content: ''; position: absolute; left: -2.35rem; top: 1.2rem; width: 12px; height: 12px; border-radius: 50%; background: #999; border: 2px solid #fff; }
+        .projects a { color: #0969da; text-decoration: none; font-weight: 500; }
+        .projects a:hover { text-decoration: underline; }
+        .projects .desc { color: #666; font-size: 0.9rem; margin-top: 0.2rem; }
+        
+        .footer { margin-top: 4rem; text-align: center; font-size: 0.85rem; color: #999; }
+        .footer a { color: #999; }
+        
+        @media (max-width: 600px) {
+            .header { flex-direction: column; text-align: center; }
+            .header-text { text-align: center; }
+            .header-icons { justify-content: center; }
+            .section { margin-top: 0.5rem; }
+            .video-grid { display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; }
+            .video-grid > div { min-width: 45%; flex-shrink: 0; scroll-snap-align: start; }
+            .talks-wrapper { max-width: 100% !important; }
+            .talks-wrapper > button { border-radius: 4px !important; width: 24px !important; height: 120px !important; background: #eee !important; border-color: #ccc !important; }
+            #event-scroll { scroll-snap-type: x mandatory; }
+            #event-scroll > div { min-width: 100% !important; max-width: 100% !important; scroll-snap-align: center; }
+            .talk-img { width: 90% !important; opacity: 0.8; transform: scaleY(1.30); }
+            .bottom-text { max-width: 100% !important; }
+            .footer div[style*="display: flex"] { flex-direction: column !important; align-items: center !important; text-align: center !important; }
+            .footer div[style*="max-width: 886px"] { text-align: center !important; }
+            .footer div[style*="justify-content: flex-start"] { justify-content: center !important; flex-direction: column !important; align-items: center !important; }
+            .footer div[style*="gap: 1.2rem"] { flex-direction: row !important; justify-content: center !important; }
+            .footer div[style*="gap: 1rem"] { flex-direction: row !important; justify-content: center !important; }
+        }
+    </style>
+    <style>
+        .neural-strand{position:fixed;top:-100px;width:2px;pointer-events:none;z-index:0;animation:strand-fall 3s linear forwards}
+        .neural-node{position:absolute;width:5px;height:5px;border-radius:50%;box-shadow:0 0 4px rgba(255,255,255,0.4)}
+        @keyframes strand-fall{0%{top:-100px;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:110vh;opacity:0}}
+    </style>
+    <script>
+    function createStrands(){
+        const count=8;
+        for(let i=0;i<count;i++){
+            setTimeout(()=>{
+                const colors=['#ff6b6b','#ffa502','#ffdd59','#2ed573','#1e90ff','#a55eea','#ff6b9d'];
+                const color=colors[Math.floor(Math.random()*colors.length)];
+                const strand=document.createElement('div');
+                strand.className='neural-strand';
+                strand.style.left=Math.random()*100+'%';
+                strand.style.height=(150+Math.random()*200)+'px';
+                strand.style.animationDuration=(4.5+Math.random()*3)+'s';
+                strand.style.background='linear-gradient(180deg,transparent,'+color+',transparent)';
+                const nodes=2+Math.floor(Math.random()*3);
+                for(let j=0;j<nodes;j++){
+                    const node=document.createElement('div');
+                    node.className='neural-node';
+                    node.style.top=Math.random()*100+'%';
+                    node.style.left='-1.5px';
+                    node.style.background=color;
+                    strand.appendChild(node);
+                }
+                document.body.appendChild(strand);
+                setTimeout(()=>strand.remove(),5000);
+            },i*300);
+        }
+    }
+    function scheduleStrands(){
+        const delay=(60+Math.random()*240)*1000;
+        setTimeout(()=>{createStrands();scheduleStrands();},delay);
+    }
+    scheduleStrands();
+    </script>
+</head>
+<body>
+
+<!-- Feedback Button + Dialog -->
+<button id="feedbackBtn" style="position:fixed;top:20px;right:20px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.6);color:#bbb;border:1px solid #ddd;cursor:pointer;font-size:1rem;z-index:100;display:flex;align-items:center;justify-content:center;" title="Feedback">α</button>
+<button id="talksBtn" style="position:fixed;top:56px;right:20px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.6);border:1px solid #ddd;cursor:pointer;z-index:100;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#bbb;" title="Upcoming Talks">β</button>
+
+<dialog id="talksDialog" style="border:1px solid #ddd;border-radius:8px;padding:2rem;max-width:400px;width:90%;position:fixed;top:280px;left:50%;transform:translateX(-50%);margin:0;background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);">
+  <h3 style="margin:0 0 1rem;font-family:-apple-system,sans-serif;color:#333;">Upcoming Talks</h3>
+  <div style="display:flex;flex-direction:column;gap:1rem;">
+    <div style="border-left:3px solid #ffb074;padding-left:12px;">
+      <div style="font-weight:600;font-size:0.9rem;color:#333;">AWS re:Invent 2026</div>
+      <div style="font-size:0.8rem;color:#888;">Las Vegas · Dec 2026</div>
+      <div style="font-size:0.85rem;color:#555;margin-top:2px;">Compliance-first LLM routing for capital markets</div>
+    </div>
+    <div style="border-left:3px solid #ffb074;padding-left:12px;">
+      <div style="font-weight:600;font-size:0.9rem;color:#333;">AWS Summit India</div>
+      <div style="font-size:0.8rem;color:#888;">Mumbai · Aug 2026</div>
+      <div style="font-size:0.85rem;color:#555;margin-top:2px;">PII detection in GenAI pipelines for FSI</div>
+    </div>
+    <div style="border-left:3px solid #ffb074;padding-left:12px;">
+      <div style="font-weight:600;font-size:0.9rem;color:#333;">GenAI Meetup</div>
+      <div style="font-size:0.8rem;color:#888;">Bangalore · Jul 2026</div>
+      <div style="font-size:0.85rem;color:#555;margin-top:2px;">Training encoder models from scratch</div>
+    </div>
+  </div>
+  <button onclick="document.getElementById('talksDialog').close()" style="background:transparent;color:#999;border:1px solid #ddd;padding:6px 16px;border-radius:4px;cursor:pointer;margin-top:1.2rem;font-size:0.85rem;">Close</button>
+</dialog>
+
+<script>
+document.getElementById('talksBtn').onclick = () => document.getElementById('talksDialog').showModal();
+</script>
+<button id="statsBtn" style="position:fixed;top:92px;right:20px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.6);border:1px solid #ddd;cursor:pointer;z-index:100;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#bbb;" title="Research Stats">γ</button>
+
+<button id="requestBtn" style="position:fixed;top:128px;right:20px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.6);border:1px solid #ddd;cursor:pointer;z-index:100;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#bbb;" title="Request">δ</button>
+
+<dialog id="requestDialog" style="border:1px solid #ddd;border-radius:8px;padding:2rem;max-width:400px;width:90%;position:fixed;top:280px;left:50%;transform:translateX(-50%);margin:0;background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);">
+  <h3 style="margin:0 0 1rem;font-family:-apple-system,sans-serif;color:#333;font-size:1rem;">Request</h3>
+  <form id="requestForm" autocomplete="off">
+    <input name="entry.name" placeholder="Name" required style="width:100%;padding:8px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:0.9rem;">
+    <input name="entry.email" placeholder="Email" required type="email" style="width:100%;padding:8px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:0.9rem;">
+    <select name="entry.request_type" required style="width:100%;padding:8px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:0.9rem;color:#555;">
+      <option value="" disabled selected>What do you need?</option>
+      <option value="consultation">Technical Consultation</option>
+      <option value="collaboration">Collaboration / Co-research</option>
+      <option value="speaking">Speaking Invitation</option>
+      <option value="model_access">Model Access / Weights</option>
+      <option value="mentoring">Mentoring / Guidance</option>
+      <option value="custom_model">Custom Model Development</option>
+      <option value="workshop">Training Workshop</option>
+      <option value="other">Other</option>
+    </select>
+    <textarea name="entry.description" placeholder="Describe your request in 50 to 500 characters" required minlength="50" maxlength="500" style="width:100%;padding:8px;height:100px;border:1px solid #ddd;border-radius:4px;resize:vertical;font-size:0.9rem;font-family:'Courier New',monospace;"></textarea>
+    <div style="display:flex;gap:10px;margin-top:1rem;">
+      <button type="submit" style="background:transparent;color:#ffb074;border:2px solid #ffb074;padding:8px 20px;border-radius:4px;cursor:pointer;font-weight:500;">Submit</button>
+      <button type="button" onclick="document.getElementById('requestDialog').close()" style="background:transparent;color:#666;border:2px solid #ddd;padding:8px 20px;border-radius:4px;cursor:pointer;">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+document.getElementById('requestBtn').onclick = () => document.getElementById('requestDialog').showModal();
+document.getElementById('requestForm').onsubmit = (e) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+  fetch('YOUR_GOOGLE_FORM_URL', { method: 'POST', mode: 'no-cors', body: data });
+  e.target.reset();
+  document.getElementById('requestDialog').close();
+  alert('Request submitted. I will get back to you.');
+};
+</script>
+
+<dialog id="statsDialog" style="border:1px solid #ddd;border-radius:8px;padding:2rem;max-width:380px;width:90%;position:fixed;top:280px;left:50%;transform:translateX(-50%);margin:0;background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);">
+  <h3 style="margin:0 0 1.2rem;font-family:-apple-system,sans-serif;color:#333;font-size:1rem;">Research Stats</h3>
+  <div style="display:flex;flex-direction:column;gap:1rem;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="font-size:1.8rem;font-weight:700;color:#333;min-width:60px;">17</div>
+      <div style="font-size:0.85rem;color:#555;">Foundation Models Trained from Scratch</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="font-size:1.8rem;font-weight:700;color:#333;min-width:60px;">500+</div>
+      <div style="font-size:0.85rem;color:#555;">GPU Hours Spent Training</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="font-size:1.8rem;font-weight:700;color:#333;min-width:60px;">4</div>
+      <div style="font-size:0.85rem;color:#555;">Ongoing Research — <a href="https://x.com/deycoding" target="_blank" style="color:#0969da;text-decoration:none;">follow on X to know</a></div>
+    </div>
+    <div style="border-top:1px solid #eee;padding-top:1rem;">
+      <div style="font-size:0.8rem;color:#888;margin-bottom:8px;">Model Weights</div>
+      <a href="https://huggingface.co/deycoding" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:0.85rem;color:#0969da;text-decoration:none;border:1px solid #ddd;padding:6px 12px;border-radius:4px;">
+        <img src="assets/images/huggingface_logo.svg" style="width:16px;height:16px;filter:grayscale(100%);">
+        Download on HuggingFace
+      </a>
+    </div>
+  </div>
+  <button onclick="document.getElementById('statsDialog').close()" style="background:transparent;color:#999;border:1px solid #ddd;padding:6px 16px;border-radius:4px;cursor:pointer;margin-top:1.2rem;font-size:0.85rem;">Close</button>
+</dialog>
+
+<script>
+document.getElementById('statsBtn').onclick = () => document.getElementById('feedbackDialog').showModal();
+</script>
+
+<dialog id="feedbackDialog" style="border:1px solid #ddd;border-radius:8px;padding:2rem;max-width:400px;width:90%;position:fixed;top:280px;left:50%;transform:translateX(-50%);margin:0;">
+  <h3 style="margin:0 0 1rem;font-family:-apple-system,sans-serif;">Question and Feedback</h3>
+  <form id="feedbackForm" autocomplete="off">
+    <input name="entry.name" placeholder="Name" required style="width:100%;padding:8px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:0.9rem;">
+    <input name="entry.email" placeholder="Email" required type="email" style="width:100%;padding:8px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:0.9rem;">
+    <select name="entry.who" required style="width:100%;padding:8px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:0.9rem;color:#555;">
+      <option value="" disabled selected>Who are you?</option>
+      <option value="professional">Professional</option>
+      <option value="researcher">Researcher</option>
+      <option value="student">Student</option>
+      <option value="engineer">Engineer</option>
+      <option value="founder">Founder / Startup</option>
+      <option value="enterprise">Enterprise / Corporate</option>
+      <option value="govt">Govt Agency</option>
+      <option value="politician">Politician</option>
+      <option value="leader">Leader</option>
+      <option value="federal">Federal Govt</option>
+      <option value="other">Other</option>
+    </select>
+    <textarea name="entry.feedback" placeholder="Your feedback in 50 to 700 characters" required minlength="50" maxlength="700" style="width:100%;padding:8px;height:100px;border:1px solid #ddd;border-radius:4px;resize:vertical;font-size:0.9rem;font-family:'Courier New',monospace;"></textarea>
+    <div style="display:flex;gap:10px;margin-top:1rem;">
+      <button type="submit" style="background:transparent;color:#ffb074;border:2px solid #ffb074;padding:8px 20px;border-radius:4px;cursor:pointer;font-weight:500;">Submit</button>
+      <button type="button" onclick="document.getElementById('feedbackDialog').close()" style="background:transparent;color:#666;border:2px solid #ddd;padding:8px 20px;border-radius:4px;cursor:pointer;">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+document.getElementById('feedbackBtn').onclick = () => document.getElementById('statsDialog').showModal();
+document.getElementById('feedbackForm').onsubmit = (e) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+  fetch('YOUR_GOOGLE_FORM_URL', { method: 'POST', mode: 'no-cors', body: data });
+  e.target.reset();
+  document.getElementById('feedbackDialog').close();
+  alert('Thanks for your feedback!');
+};
+</script>
+<div class="container">
+
+    <div class="header">
+        <div style="position: relative; display: inline-block;" class="avatar-wrap">
+            <img src="https://github.com/deycoding.png" alt="Abhishek Dey" class="avatar">
+            <a href="https://topmate.io/decoding" class="avatar-popup" style="position:absolute; bottom:-1rem; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.75); color:#fff; padding:0.5rem 1rem; border-radius:20px; font-size:0.8rem; white-space:nowrap; text-decoration:none; opacity:0; transition:opacity 0.3s; z-index:10;">Book connect</a>
+        </div>
+        <div class="header-text">
+            <div class="name">Abhishek Dey</div>
+            <div class="tagline">I train Deep Neural Nets from Scratch</div>
+            <div class="subtitle">Independent AI/ML Researcher</div>
+            <div class="header-icons">
+                <a href="https://github.com/deycoding" title="GitHub"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+                <a href="https://huggingface.co/deycoding" title="HuggingFace"><img src="assets/images/huggingface_logo.svg" style="width: 20px; height: 20px; filter: grayscale(100%);"></a>
+                <a href="https://deycoding.github.io" title="Blog"><svg viewBox="0 0 16 16"><path d="M14.5 1h-13A1.5 1.5 0 000 2.5v11A1.5 1.5 0 001.5 15h13a1.5 1.5 0 001.5-1.5v-11A1.5 1.5 0 0014.5 1zM3 3h10v1H3V3zm0 3h10v1H3V6zm0 3h7v1H3V9z"/></svg></a>
+                <a href="https://x.com/deycoding" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                <a href="https://youtube.com/@deycodes" title="YouTube"><svg viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 011.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 01-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 01-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 010 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 011.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 017.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg></a>
+                <a href="https://linkedin.com/in/deycoding" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+            </div>
+        </div>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #ddd; margin: 0 calc(-50vw + 50%) 1.5rem calc(-50vw + 50%); width: 100vw;">
+
+    <div class="section">
+        <p>I train Deep Neural Networks from the ground up - designing neural network architectures, writing training loops, and building sovereign foundation models from nothing. I don't prefer to fine-tune on top of existing LLMs - I create the recipe from the ground up and train the foundation model with diversified datasets. My work spans AI research - Dense decoders, Mixture of Experts, and Encoder architectures - covering the full lifecycle from pre-training on raw text to post-training with SFT, RLHF, and Chain-of-Thought. I build GenAI products for both research and commercial use. I spend my hours with GPUs, turning compute into intelligence. I write to break down and simplify AI/ML and LLM concepts for the world - making the complex accessible. I also train students and provide technical consultations to industry leaders.</p>
+        <p>By profession, I am a Senior Technical Account Manager at Amazon - helping top-tier AWS customers architect, operate, and scale in the cloud and AI.</p>
+    </div>
+
+    <div class="section">
+        <h2>Independent Research - Built and Launched</h2>
+        <p>These are the projects I have built from ground up - each designed to solve a real-world problem. During these projects, I have trained multiple foundation models spanning Dense decoders, Mixture of Experts, and Encoder architectures.</p>
+        <ul class="projects">
+            <li>
+                <a href="https://github.com/deycoding/deycoding-compliance-classifier-router">Compliance Classifier Router (134M Encoder)</a>
+                <div class="desc">A BERT-based encoder model that classifies incoming queries by complexity and PII sensitivity, routing them to the appropriate LLM tier. 99.2% accuracy, 7ms latency, deployed on ECS with full CloudFormation IaC. Enforces data residency for Indian financial services.</div>
+            </li>
+            <li>
+                <a href="#">Indian Multi-Language Model (3B)</a>
+                <div class="desc">Pre-trained on 6 Indian languages - Hindi, Bengali, Tamil, Telugu, Marathi, Kannada. Uses a 64K multilingual tokenizer trained across all languages. Designed for a country where most AI tools only work in English.</div>
+            </li>
+            <li>
+                <a href="#">Sanskrit Translation Model (3B-7B)</a>
+                <div class="desc">Bilingual English-Sanskrit model trained on Vedic texts, epics, and modern Sanskrit. Handles translation, grammar correction, and transliteration. Preserving an ancient language through modern architecture.</div>
+            </li>
+            <li>
+                <a href="#">Drone Programming - Instruction Set Generator (&lt;1B)</a>
+                <div class="desc">A decoder model that converts English prompts into executable drone flight code. Non-programmers describe a mission and the model generates the SDK commands. Includes a safety validator that checks altitude limits and whitelisted functions before execution.</div>
+            </li>
+        </ul>
+        <div id="more-projects" style="display: none;">
+            <ul class="projects">
+                <li>
+                    <a href="#">Indian SEBI Regulation - Guideline Decoder (1B)</a>
+                    <div class="desc">A decoder model trained on SEBI circulars, regulations, and securities laws. Compliance teams ask questions in natural language and the model generates answers citing specific regulation sections. Purpose-built for Indian financial services.</div>
+                </li>
+            </ul>
+        </div>
+        <button onclick="var el=document.getElementById('more-projects'); if(el.style.display==='none'){el.style.display='block';this.textContent='Show less';}else{el.style.display='none';this.textContent='More projects';}" style="background:none; border:none; color:#0969da; cursor:pointer; font-size:0.95rem; padding:0.5rem 0; font-weight:500;">More projects</button>
+    </div>
+
+    <div class="section">
+        <h2>Featured Writing</h2>
+        <ul class="projects">
+            <li>
+                <a href="https://deycoding.github.io/ai/llm/architecture/tiny-models/2026/06/21/shrinking-intelligence-tiny-language-models/">The Art of Building Tiny Language Model - Shrinking Intelligence</a>
+                <div class="desc">Training decoder transformers at 2.5M to 10M parameters from scratch, measuring nine inference metrics across all four, and finding out how much intelligence you can pack in such tiny language models.</div>
+            </li>
+            <li>
+                <a href="https://deycoding.github.io/ai/llm/architecture/2026/06/15/what-does-70b-parameters-mean/">What Does 70B Parameters Actually Mean?</a>
+                <div class="desc">Breaking down what 70 billion parameters actually represent, where the number comes from, and when bigger genuinely matters versus when it's expensive overkill.</div>
+            </li>
+            <li>
+                <a href="https://deycoding.github.io/ai/agi/2026/06/14/can-ai-develop-intelligence/">Can AI Develop Intelligence On Its Own?</a>
+                <div class="desc">Exploring whether a pre-trained model left alone can develop intelligence, what AGI actually requires, and why the real race is between humans, not machines.</div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Research</h2>
+        <p>In 2026, I am researching on - Classifier-gated routing for cost optimization and performance, sovereign language models for Indian languages (Sanskrit, Hindi, Tamil, Bengali, Kannada), purpose-built small and tiny models for efficiency, reinforcement learning for post-training alignment (RLHF, RLVR, DPO, GRPO, process reward models, value functions and critic models for planning, constitutional AI, multi-turn RL for agents, and reward optimization at scale), data residency and compliance by design, and the intersection of compliance and AI architecture.</p>
+    </div>
+
+    <div class="section">
+        <h2>Videos</h2>
+        <div class="video-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; filter: grayscale(100%);">
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/aircAruvnKk" frameborder="0" allowfullscreen></iframe><div class="desc">Neural Networks Explained</div></div>
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/kCc8FmEb1nY" frameborder="0" allowfullscreen></iframe><div class="desc">Building GPT from Scratch</div></div>
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/zjkBMFhNj_g" frameborder="0" allowfullscreen></iframe><div class="desc">Attention Mechanism</div></div>
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/VMj-3S1tku0" frameborder="0" allowfullscreen></iframe><div class="desc">Backpropagation</div></div>
+        </div>
+        <div class="video-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; filter: grayscale(100%);">
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/wjZofJX0v4M" frameborder="0" allowfullscreen></iframe><div class="desc">Transformers Explained</div></div>
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/UZDiGooFs54" frameborder="0" allowfullscreen></iframe><div class="desc">Word Embeddings</div></div>
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/SEnXr6v2ifU" frameborder="0" allowfullscreen></iframe><div class="desc">Tokenization</div></div>
+            <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/piF6D6CQxUw" frameborder="0" allowfullscreen></iframe><div class="desc">LLM Training</div></div>
+        </div>
+        <div id="more-videos" style="display: none; margin-top: 1rem;">
+            <div class="video-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; filter: grayscale(100%);">
+                <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/bZQun8Y4L2A" frameborder="0" allowfullscreen></iframe><div class="desc">GPT Explained</div></div>
+                <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/zizonToFXDs" frameborder="0" allowfullscreen></iframe><div class="desc">RLHF Deep Dive</div></div>
+                <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/zduSFxRajkE" frameborder="0" allowfullscreen></iframe><div class="desc">Scaling Laws</div></div>
+                <div><iframe width="100%" height="120" src="https://www.youtube.com/embed/9-Jl0dxWQs8" frameborder="0" allowfullscreen></iframe><div class="desc">MoE Architecture</div></div>
+            </div>
+        </div>
+        <button onclick="var el=document.getElementById('more-videos'); if(el.style.display==='none'){el.style.display='block';this.textContent='Show less';}else{el.style.display='none';this.textContent='More videos';}" style="background:none; border:none; color:#0969da; cursor:pointer; font-size:0.95rem; padding:0.5rem 0; font-weight:500;">More videos</button>
+    </div>
+
+    <div class="section">
+        <h2>Papers & Publications</h2>
+        <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                <img src="assets/images/load_balancer.png" style="width: 40px; height: 40px; flex-shrink: 0; margin-top: 2px; filter: grayscale(100%);">
+                <div>
+                    <a href="https://aws.amazon.com/blogs/networking-and-content-delivery/automating-aws-application-load-balancer-capacity-unit-reservation/" style="color: #0969da; text-decoration: none; font-weight: 500;">Automating AWS Application Load Balancer Capacity Unit Reservation</a> <span style="font-size: 0.8rem; color: #999;">[AWS - 2023]</span>
+                    <div class="desc">Automating ALB capacity planning with reserved capacity units for predictable workloads on AWS.</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                <img src="assets/images/observability.png" style="width: 40px; height: 40px; flex-shrink: 0; margin-top: 2px; filter: grayscale(100%);">
+                <div>
+                    <a href="https://aws.amazon.com/blogs/business-intelligence/visualize-aws-network-firewall-logs-with-amazon-quicksight-dashboards/" style="color: #0969da; text-decoration: none; font-weight: 500;">Visualize AWS Network Firewall Logs with Amazon QuickSight Dashboards</a> <span style="font-size: 0.8rem; color: #999;">[AWS - 2022]</span>
+                    <div class="desc">Building real-time security visibility by visualizing Network Firewall logs through QuickSight dashboards.</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                <img src="assets/images/integration.png" style="width: 40px; height: 40px; flex-shrink: 0; margin-top: 2px; filter: grayscale(100%);">
+                <div>
+                    <a href="https://aws.amazon.com/blogs/apn/how-to-integrate-amazon-cloudwatch-alarms-with-atlassian-confluence-knowledge-articles/" style="color: #0969da; text-decoration: none; font-weight: 500;">How to Integrate Amazon CloudWatch Alarms with Atlassian Confluence</a> <span style="font-size: 0.8rem; color: #999;">[AWS - 2021]</span>
+                    <div class="desc">Bridging monitoring and documentation by connecting CloudWatch alarms to Confluence knowledge articles.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="margin-top: 3rem; margin-bottom: 3rem; background: #f5f5f5; padding: 1.2rem 2.5rem; border-radius: 0; margin-left: -1.5rem; margin-right: -1.5rem; border: 1.5px solid #adff2f;">
+        <h2>Academic</h2>
+        <p>I hold a BSc in Physics (Honours) with Mathemetics, graduated with with first class grade - building the mathematical foundation that now drives my neural network research. I earned a Bachelor of Engineering degree in Computer Science with 8.4 CGPA in 2011, giving me the systems thinking to architect and train models at scale. I am a proud alumnus of the Indian Institute of Management (IIM) Calcutta - one of Asia's premier business schools. Currently pursuing a Master of Arts in Philosophy, exploring the deeper questions of intelligence, cognition, and what it means for machines to "learn."</p>
+    </div>
+
+    <div class="section">
+        <h2>Work Experience</h2>
+        <div style="border-left: 2px solid #ddd; margin-left: 1rem; padding-left: 2rem;">
+            <div style="position: relative; margin-bottom: 2rem;">
+                <img src="assets/images/amazon_logo.jpg" style="width: 44px; height: 44px; position: absolute; left: -3.4rem; top: 0; border-radius: 4px;">
+                <div style="font-weight: 600;">Amazon Web Services</div>
+                <div style="font-size: 0.9rem; color: #666;">Tech Account Manager (Cloud & AI) · 2020 - Now (2026)</div>
+                <div class="desc">Helping top-tier AWS customers architect, operate, and scale in the cloud and AI. Driving operational excellence for enterprise accounts across infrastructure, security, and cost optimization.</div>
+            </div>
+            <div style="position: relative; margin-bottom: 2rem;">
+                <img src="assets/images/deloitte_logo.jpg" style="width: 44px; height: 44px; position: absolute; left: -3.4rem; top: 0; border-radius: 4px;">
+                <div style="font-weight: 600;">Deloitte</div>
+                <div style="font-size: 0.9rem; color: #666;">Data and AI Consultant · 2018 - 2020</div>
+                <div class="desc">Delivered data and AI consulting engagements for enterprise clients. Designed cloud-native analytics solutions and guided digital transformation initiatives.</div>
+            </div>
+            <div style="position: relative; margin-bottom: 2rem;">
+                <img src="assets/images/lt_infotech_logo.jpg" style="width: 44px; height: 44px; position: absolute; left: -3.4rem; top: 0; border-radius: 4px;">
+                <div style="font-weight: 600;">Larsen & Toubro Infotech</div>
+                <div style="font-size: 0.9rem; color: #666;">Lead Networks · 2017 - 2018</div>
+                <div class="desc">Led network infrastructure design and operations for enterprise clients. Managed large-scale deployments across routing, switching, and security domains.</div>
+            </div>
+            <div style="position: relative; margin-bottom: 2rem;">
+                <img src="assets/images/accenture_logo.jpg" style="width: 44px; height: 44px; position: absolute; left: -3.4rem; top: 0; border-radius: 4px;">
+                <div style="font-weight: 600;">Accenture</div>
+                <div style="font-size: 0.9rem; color: #666;">Sr. Analyst · 2015 - 2017</div>
+                <div class="desc">Delivered technology consulting and infrastructure management services for global enterprise accounts.</div>
+            </div>
+            <div style="position: relative; margin-bottom: 2rem;">
+                <img src="assets/images/hcltech_logo.jpg" style="width: 44px; height: 44px; position: absolute; left: -3.4rem; top: 0; border-radius: 4px;">
+                <div style="font-weight: 600;">HCL Technology</div>
+                <div style="font-size: 0.9rem; color: #666;">Specialist · 2012 - 2015</div>
+                <div class="desc">Managed enterprise network operations and infrastructure support for global clients across multiple geographies.</div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="section" style="margin-top: 0;">
+        <h2 style="text-align: center; background: linear-gradient(90deg, #ff6b9d, #9b59b6, #f1c40f, #39ff14, #ff6b6b); -webkit-background-clip: text; background-clip: text; color: transparent;">Featured Talks</h2>
+        <div class="talks-wrapper" style="display: flex; align-items: center; gap: 0.5rem; max-width: 75%; margin: 0 auto;">
+            <button onclick="document.getElementById('event-scroll').scrollBy({left:-280,behavior:'smooth'})" style="background: none; border: 1px solid #ddd; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1.2rem; color: #666; flex-shrink: 0;">‹</button>
+            <div id="event-scroll" style="display: flex; gap: 1rem; overflow: hidden; scroll-behavior: smooth;">
+                <div style="min-width: clamp(150px, 25vw, 350px); max-width: clamp(150px, 25vw, 350px); height: 120px; overflow: hidden; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem 0.8rem; flex-shrink: 0;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">AWS re:Invent 2023</div>
+                    <div style="font-size: 0.8rem; color: #666;">Las Vegas · Dec 2023</div>
+                    <div class="desc">Spoke on AWS Networks Optimization</div>
+                </div>
+                <div style="min-width: clamp(150px, 25vw, 350px); max-width: clamp(150px, 25vw, 350px); height: 120px; overflow: hidden; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem 0.8rem; flex-shrink: 0;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">AWS Summit Mumbai</div>
+                    <div style="font-size: 0.8rem; color: #666;">Mumbai · May 2025</div>
+                    <div class="desc">Panel on sovereign AI models for Indian enterprises</div>
+                </div>
+                <div style="min-width: clamp(150px, 25vw, 350px); max-width: clamp(150px, 25vw, 350px); height: 120px; overflow: hidden; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem 0.8rem; flex-shrink: 0;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">GenAI Meetup Bangalore</div>
+                    <div style="font-size: 0.8rem; color: #666;">Bangalore · Mar 2025</div>
+                    <div class="desc">Workshop on training transformers from scratch</div>
+                </div>
+                <div style="min-width: clamp(150px, 25vw, 350px); max-width: clamp(150px, 25vw, 350px); height: 120px; overflow: hidden; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem 0.8rem; flex-shrink: 0;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">IIM Calcutta Tech Talk</div>
+                    <div style="font-size: 0.8rem; color: #666;">Kolkata · Jan 2025</div>
+                    <div class="desc">Guest lecture on neural network architectures and industry applications</div>
+                </div>
+                <div style="min-width: clamp(150px, 25vw, 350px); max-width: clamp(150px, 25vw, 350px); height: 120px; overflow: hidden; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem 0.8rem; flex-shrink: 0;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">DevOps India Summit</div>
+                    <div style="font-size: 0.8rem; color: #666;">Delhi · Nov 2024</div>
+                    <div class="desc">Deploying ML models at scale with ECS and CloudFormation</div>
+                </div>
+                <div style="min-width: clamp(150px, 25vw, 350px); max-width: clamp(150px, 25vw, 350px); height: 120px; overflow: hidden; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem 0.8rem; flex-shrink: 0;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">Cloud Native Conf</div>
+                    <div style="font-size: 0.8rem; color: #666;">Hyderabad · Sep 2024</div>
+                    <div class="desc">Building compliance-first AI architectures for FSI</div>
+                </div>
+                <div style="min-width: clamp(150px, 25vw, 350px); max-width: clamp(150px, 25vw, 350px); height: 120px; overflow: hidden; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem 0.8rem; flex-shrink: 0;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">PyData Mumbai</div>
+                    <div style="font-size: 0.8rem; color: #666;">Mumbai · Jul 2024</div>
+                    <div class="desc">From networks to neural networks - a practitioner's journey</div>
+                </div>
+            </div>
+            <button onclick="document.getElementById('event-scroll').scrollBy({left:280,behavior:'smooth'})" style="background: none; border: 1px solid #ddd; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; font-size: 1.2rem; color: #666; flex-shrink: 0;">›</button>
+        </div>
+    </div>
+
+    <img src="assets/images/my-talk.png" alt="My Talk" class="talk-img" style="width: 65%; display: block; margin: 2rem auto 0; border-radius: 6px; filter: grayscale(100%);">
+
+    <p class="bottom-text" style="text-align: center; color: #666; line-height: 1.7; margin: 2rem auto 0; max-width: 65%; font-size: 0.95rem;">I operate at the intersection of two roles that complement each other. As a Senior Technical Account Manager at Amazon, I partner with C-Suite leaders to shape their cloud and AI strategy, drive informed decisions, and create opportunities that accelerate ROI. As an independent AI/ML researcher, I build foundation models from scratch, Dense decoders, Mixture of Experts, Encoders, training them on raw text and turning compute into intelligence. The next pages cover my consulting, leadership, and sales journey.</p>
+
+    <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <a href="index.html" style="width: 32px; height: 32px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.8rem; font-weight: 600;">1</a>
+        <a href="page2.html" style="width: 32px; height: 32px; border-radius: 50%; background: #ddd; color: #555; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.8rem; font-weight: 600;">2</a>
+        <a href="page3.html" style="width: 32px; height: 32px; border-radius: 50%; background: #ddd; color: #555; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.8rem; font-weight: 600;">3</a>
+    </div>
+
+    <div class="footer" style="background: #f9f9f9; margin: 3rem calc(-50vw + 50%) 0; padding: 2.5rem 0; width: 100vw; border-top: 1px solid #eee;">
+        <div style="max-width: 886px; margin: 0 auto; padding: 0 2rem; text-align: left;">
+            <div style="display: flex; justify-content: flex-start; align-items: flex-start; flex-wrap: wrap; gap: 2rem;">
+                <div>
+                    <div style="font-weight: 600; font-size: 1.1rem; color: #333; margin-bottom: 0.5rem;">Abhishek Dey</div>
+                    <div style="font-size: 0.85rem; color: #888; line-height: 1.6;">Independent AI/ML Researcher<br>B.Sc Physics, BE Computer Science, IIM-C (Alumnus)</div>
+                </div>
+                <div>
+                    <div style="font-weight: 600; font-size: 0.9rem; color: #333; margin-bottom: 0.8rem;">Platforms</div>
+                    <div style="display: flex; gap: 1.2rem; align-items: center;">
+                        <a href="https://deycoding.github.io" style="display: flex; align-items: center; gap: 0.3rem; color: #666; text-decoration: none; font-size: 0.85rem;"><svg width="14" height="14" viewBox="0 0 16 16" fill="#888"><path d="M14.5 1h-13A1.5 1.5 0 000 2.5v11A1.5 1.5 0 001.5 15h13a1.5 1.5 0 001.5-1.5v-11A1.5 1.5 0 0014.5 1zM3 3h10v1H3V3zm0 3h10v1H3V6zm0 3h7v1H3V9z"/></svg>deycoding</a>
+                        <a href="https://github.com/deycoding" style="display: flex; align-items: center; gap: 0.3rem; color: #666; text-decoration: none; font-size: 0.85rem;"><svg width="14" height="14" viewBox="0 0 16 16" fill="#888"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>deycoding</a>
+                        <a href="https://huggingface.co/deycoding" style="display: flex; align-items: center; gap: 0.3rem; color: #666; text-decoration: none; font-size: 0.85rem;"><img src="assets/images/huggingface_logo.svg" style="width: 14px; height: 14px; filter: grayscale(100%);">deycoding</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-weight: 600; font-size: 0.9rem; color: #333; margin-bottom: 0.8rem;">Connect</div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <a href="https://linkedin.com/in/deycoding" style="color: #888;"><svg width="18" height="18" viewBox="0 0 24 24" fill="#888"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        <a href="https://x.com/deycoding" style="color: #888;"><svg width="18" height="18" viewBox="0 0 24 24" fill="#888"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="https://topmate.io/decoding" style="color: #888;"><img src="assets/images/topmate_logo.jpg" style="width: 24px; height: 24px; filter: grayscale(100%); border-radius: 3px;"></a>
+                        <a href="https://youtube.com/@deycodes" style="color: #888;"><svg width="18" height="18" viewBox="0 0 16 16" fill="#888"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 011.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 01-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 01-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 010 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 011.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 017.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem; font-size: 0.8rem; color: #bbb;">© 2026 Abhishek Dey. All rights reserved.</div>
+        </div>
+    </div>
+    </div>
+
+</div>
+</body>
+</html>
